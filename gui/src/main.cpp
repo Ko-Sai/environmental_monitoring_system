@@ -5,11 +5,11 @@ int main (int argc, char** argv)
   
   // Initialize ROS
   ROS_INFO("Node started");
-  ros::init (argc, argv, "Environment Monitoring");
+  ros::init (argc, argv, "visualizer"); // need to change node name
 
-  EnvVisualizer envObj;
+  EnvVisualizer EnvVisualizerObj;
 
-  envObj.run();
+  EnvVisualizerObj.run();
 
   return 0;
 }
