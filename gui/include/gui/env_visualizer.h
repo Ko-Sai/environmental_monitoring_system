@@ -1,6 +1,7 @@
 #ifndef ENV_VISUALIZER_H
 #define ENV_VISUALIZER_H
 
+#include <QApplication>
 #include <QWidget>
 #include <QFileDialog>
 #include <QSlider>
@@ -15,6 +16,7 @@
 #include <QDebug>
 
 #include "rviz/visualization_manager.h"
+#include "rviz/render_panel.h"
 
 #include <ros/ros.h>
 
@@ -22,6 +24,7 @@ namespace rviz
 {
 
 	class VisualizationManager;
+	class RenderPanel;
 
 }
 
@@ -66,6 +69,7 @@ class EnvVisualizer: public QWidget
   		QPushButton* m_left_movement_button;
   		QPushButton* m_right_movement_button;
 		rviz::VisualizationManager* manager_;
+		rviz::RenderPanel* render_panel_;
 
 
 		// Functions(private)

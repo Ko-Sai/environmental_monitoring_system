@@ -4,12 +4,21 @@ int main (int argc, char** argv)
 {
   
   // Initialize ROS
-  ROS_INFO("Node started");
-  ros::init (argc, argv, "visualizer"); // need to change node name
+  if( !ros::isInitialized() )
+  {
 
-  EnvVisualizer EnvVisualizerObj;
+    ROS_INFO("Node started");
+    ros::init( argc, argv, "visualizer"); // need to change node name
 
-  EnvVisualizerObj.run();
+  }
 
-  return 0;
+  QApplication app( argc, argv );
+
+  EnvVisualizer* EnvVisualizerObj = new EnvVisualizer();
+  EnvVisualizerObj->show();
+
+  app.exec();
+
+  delete EnvVisualizerObj;
+  
 }
