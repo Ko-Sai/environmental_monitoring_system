@@ -44,6 +44,8 @@ EnvVisualizer::EnvVisualizer( QWidget* parent )
 
   	manager_->initialize();
   	manager_->startUpdate();
+  
+
 
 }
 
