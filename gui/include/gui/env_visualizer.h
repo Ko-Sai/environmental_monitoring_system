@@ -17,6 +17,7 @@
 
 #include "rviz/visualization_manager.h"
 #include "rviz/render_panel.h"
+#include "rviz/display.h"
 
 #include <ros/ros.h>
 
@@ -41,7 +42,7 @@ class EnvVisualizer: public QWidget
 		void run();
 
 	private Q_SLOTS:
-		//void on_m_button_record_clicked();
+		void on_m_start_button_clicked();
 
 
 	private:
@@ -68,6 +69,8 @@ class EnvVisualizer: public QWidget
   		QPushButton* m_backward_movement_button;
   		QPushButton* m_left_movement_button;
   		QPushButton* m_right_movement_button;
+  		QPushButton* m_start_button;
+  		rviz::Display* display_;
 		rviz::VisualizationManager* manager_;
 		rviz::RenderPanel* render_panel_;
 
