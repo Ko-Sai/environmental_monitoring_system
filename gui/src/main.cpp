@@ -16,6 +16,7 @@ int main (int argc, char** argv)
 
   EnvVisualizer* EnvVisualizerObj = new EnvVisualizer();
   EnvVisualizerObj->show();
+  EnvVisualizerObj->run();
 
   app.exec();
 

@@ -21,6 +21,8 @@
 
 #include <ros/ros.h>
 
+#include <geometry_msgs/Twist.h>
+
 namespace rviz
 {
 
@@ -43,7 +45,11 @@ class EnvVisualizer: public QWidget
 
 	private Q_SLOTS:
 		void on_m_start_button_clicked();
-
+		void on_m_forward_movement_button_clicked();
+		void on_m_backward_movement_button_clicked();
+		void on_m_left_movement_button_clicked();
+		void on_m_right_movement_button_clicked();
+		void on_m_stop_movement_button_clicked();
 
 	private:
 
@@ -54,10 +60,11 @@ class EnvVisualizer: public QWidget
 		ros::Subscriber sub_image;
 
 		// Publishers
-		ros::Publisher pub_;
+		ros::Publisher cmd_vel_pub;
 
 		// Topic names
 		std::string m_topic_image;
+		std::string m_topic_cmd_vel;
 
 
 		// Variables
@@ -70,9 +77,12 @@ class EnvVisualizer: public QWidget
   		QPushButton* m_left_movement_button;
   		QPushButton* m_right_movement_button;
   		QPushButton* m_start_button;
+  		QPushButton* m_stop_movement_button;
   		rviz::Display* display_;
 		rviz::VisualizationManager* manager_;
 		rviz::RenderPanel* render_panel_;
+
+		geometry_msgs::Twist twist;
 
 
 		// Functions(private)
