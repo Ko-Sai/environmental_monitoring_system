@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+ <world name="default">
+ <include>
+ <uri>model://ground_plane</uri>
+ </include>
+ <!-- reference to your plugin -->
+ <plugin name="gazebo_plugin_publisher" filename="libgazebo_plugin_publisher.so"/>
+ </world>
+</sdf>
