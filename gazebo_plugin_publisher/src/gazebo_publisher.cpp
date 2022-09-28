@@ -1,13 +1,14 @@
 #include "gazebo_publisher.h"
 
 using namespace gazebo;
-GZ_REGISTER_WORLD_PLUGIN(TempHumidityPublisher)
+GZ_REGISTER_SENSOR_PLUGIN(TempHumidityPublisher)
 
 TempHumidityPublisher::TempHumidityPublisher()
 {
 
     temp_publisher     = nh.advertise<std_msgs::Float64>("/gazebo/temperature_data", 1);
     humidity_publisher = nh.advertise<std_msgs::Float64>("/gazebo/humidity_data", 1);
+    ROS_INFO("Hello Constructor!");
 
 }
 
@@ -15,7 +16,7 @@ TempHumidityPublisher::TempHumidityPublisher()
 TempHumidityPublisher::~TempHumidityPublisher() {}
 
 
-void TempHumidityPublisher::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
+void TempHumidityPublisher::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 {
 
     // std_msgs::Float64 msg;
@@ -23,21 +24,17 @@ void TempHumidityPublisher::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
     // ROS_INFO("Hello Publisher!");
  
     // temp_publisher.publish(msg); 
-    transport::NodePtr node(new transport::Node());
-    node->Init(_world->Name());   
-    transport::PublisherPtr factoryPub = node->Advertise<msgs::Factory>("~/factory");
-    msgs::Factory msg;
+    ROS_INFO("Hello Load1!");
+    this->connection = this->parentSensor->ConnectUpdated(std::bind(&TempHumidityPublisher::publish, this));
+    ROS_INFO("Hello Load2!");
 
-      // Model file to load
-      msg.set_sdf_filename("model://cylinder");
+}
 
-      // Pose to initialize the model to
-      msgs::Set(msg.mutable_pose(),
-          ignition::math::Pose3d(
-            ignition::math::Vector3d(1, -2, 0),
-            ignition::math::Quaterniond(0, 0, 0)));
-
-      // Send the message
-      factoryPub->Publish(msg);
-
+void TempHumidityPublisher::publish()
+{
+    std_msgs::Float64 msg;
+    msg.data = 100.0;
+    ROS_INFO("Hello Publisher!");
+ 
+    temp_publisher.publish(msg); 
 }
