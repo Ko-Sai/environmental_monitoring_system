@@ -2,34 +2,30 @@
 #define GAZEBO_PUBLISHER
 
 #include "gazebo/common/Plugin.hh"
+#include "gazebo/common/Events.hh"
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 
-#include "gazebo/sensors/sensors.hh"
-#include "gazebo/common/Events.hh"
-#include <gazebo/sensors/Sensor.hh>
-#include <gazebo/sensors/SensorTypes.hh>
+
 
 namespace gazebo {
 
-class GAZEBO_VISIBLE TempHumidityPublisher : public SensorPlugin
+class TempHumidityPublisher : public WorldPlugin
 {
 
     public:
         TempHumidityPublisher(); 
         ~TempHumidityPublisher();
 
-        void Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf);
-        void publish();
+        void Load(physics::WorldPtr _world, sdf::ElementPtr _sdf);
+        void publish_data();
 
-    protected: sensors::RaySensorPtr parentSensor;
     private:
-        
+        ros::NodeHandle nh;
+        ros::Publisher temp_publisher;
+        ros::Publisher humidity_publisher;
         event::ConnectionPtr connection;
-        
-    ros::NodeHandle nh;
-    ros::Publisher temp_publisher;
-    ros::Publisher humidity_publisher;
+
 };
 
 
