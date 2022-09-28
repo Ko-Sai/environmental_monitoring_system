@@ -30,6 +30,11 @@ EnvVisualizer::EnvVisualizer( QWidget* parent )
   	m_stop_movement_button->setText("Stop");
   	m_stop_movement_button->setGeometry(QRect(90, 180, 91, 31));
 
+  	m_temp_data_display = new QLineEdit;
+  	m_temp_data_display->setText("Temp data");
+  	m_humidity_data_display = new QLineEdit;
+  	m_humidity_data_display->setText("Humidity data");
+
 		m_forward_movement_button->setEnabled(true);
   	m_backward_movement_button->setEnabled(true);  
   	m_left_movement_button->setEnabled(true);
@@ -43,6 +48,8 @@ EnvVisualizer::EnvVisualizer( QWidget* parent )
   	controls_layout->addWidget( m_right_movement_button, 0, 3 );
   	controls_layout->addWidget( m_start_button, 1, 0 );
   	controls_layout->addWidget( m_stop_movement_button, 1, 1 );
+  	controls_layout->addWidget( m_temp_data_display, 1, 2 );
+  	controls_layout->addWidget( m_humidity_data_display, 1, 3 );
 
   	render_panel_ = new rviz::RenderPanel();
   	QVBoxLayout* main_layout = new QVBoxLayout;

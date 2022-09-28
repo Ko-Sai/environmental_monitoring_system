@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QLineEdit>
 
 #include "rviz/visualization_manager.h"
 #include "rviz/render_panel.h"
@@ -78,6 +79,10 @@ class EnvVisualizer: public QWidget
   		QPushButton* m_right_movement_button;
   		QPushButton* m_start_button;
   		QPushButton* m_stop_movement_button;
+  		QLineEdit* m_temp_data_display;
+  		QLineEdit* m_humidity_data_display;
+
+
   		rviz::Display* display_;
 		rviz::VisualizationManager* manager_;
 		rviz::RenderPanel* render_panel_;
