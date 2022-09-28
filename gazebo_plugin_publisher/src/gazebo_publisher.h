@@ -26,6 +26,9 @@ class TempHumidityPublisher : public WorldPlugin
         ros::Publisher humidity_publisher;
         event::ConnectionPtr connection;
 
+        std_msgs::Float64 temp_data;
+        std_msgs::Float64 humidity_data;
+
 };
 
 

@@ -17,16 +17,16 @@ TempHumidityPublisher::~TempHumidityPublisher() {}
 void TempHumidityPublisher::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
 {
 
-    this->connection =  event::Events::ConnectWorldUpdateBegin(boost::bind(&TempHumidityPublisher::publish, this));
+    this->connection =  event::Events::ConnectWorldUpdateBegin(boost::bind(&TempHumidityPublisher::publish_data, this));
 
 }
 
-void TempHumidityPublisher::publish()
+void TempHumidityPublisher::publish_data()
 {
 
-    std_msgs::Float64 msg;
-    msg.data = 100.0;
-
+    temp_data.data = 100.0;
+    humidity_data.data = 200.0;
  
-    temp_publisher.publish(msg); 
+    temp_publisher.publish(temp_data); 
+    humidity_publisher.publish(humidity_data);
 }
