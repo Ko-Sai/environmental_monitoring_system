@@ -18,11 +18,26 @@ TempHumidityPublisher::~TempHumidityPublisher() {}
 void TempHumidityPublisher::Load(physics::WorldPtr _world, sdf::ElementPtr _sdf)
 {
 
-    std_msgs::Float64 msg;
-    msg.data = 100.0;
-    ROS_INFO("Hello Publisher!");
+    // std_msgs::Float64 msg;
+    // msg.data = 100.0;
+    // ROS_INFO("Hello Publisher!");
  
-    temp_publisher.publish(msg);    
-    
+    // temp_publisher.publish(msg); 
+    transport::NodePtr node(new transport::Node());
+    node->Init(_world->Name());   
+    transport::PublisherPtr factoryPub = node->Advertise<msgs::Factory>("~/factory");
+    msgs::Factory msg;
+
+      // Model file to load
+      msg.set_sdf_filename("model://cylinder");
+
+      // Pose to initialize the model to
+      msgs::Set(msg.mutable_pose(),
+          ignition::math::Pose3d(
+            ignition::math::Vector3d(1, -2, 0),
+            ignition::math::Quaterniond(0, 0, 0)));
+
+      // Send the message
+      factoryPub->Publish(msg);
 
 }

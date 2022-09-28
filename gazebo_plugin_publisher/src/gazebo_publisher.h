@@ -2,6 +2,9 @@
 #define GAZEBO_PUBLISHER
 
 #include "gazebo/common/Plugin.hh"
+#include "gazebo/physics/physics.hh"
+#include "gazebo/gazebo.hh"
+#include <ignition/math/Pose3.hh>
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 
