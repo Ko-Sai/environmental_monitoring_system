@@ -30,16 +30,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 	: QMainWindow(parent)
 	, qnode(argc,argv)
 {
-	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
-
-	/*********************
-	** Logging
-	**********************/
 	
-
-    /*********************
-    ** Auto Start
-    **********************/
+	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
     
 }
 
@@ -74,4 +66,7 @@ MainWindow::~MainWindow() {}
 
 
 }  // namespace monitoring_gui
+void monitoring_gui::MainWindow::on_forwardButton_clicked()
+{
 
+}

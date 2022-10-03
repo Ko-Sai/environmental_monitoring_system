@@ -48,6 +48,9 @@ public Q_SLOTS:
     *******************************************/
 
 
+private Q_SLOTS:
+    void on_forwardButton_clicked();
+
 private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
