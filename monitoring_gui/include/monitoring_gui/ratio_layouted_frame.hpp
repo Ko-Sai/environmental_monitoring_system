@@ -30,8 +30,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef rqt_image_view__RatioLayoutedFrame_H
-#define rqt_image_view__RatioLayoutedFrame_H
 
 #include <QFrame>
 #include <QImage>
@@ -41,8 +39,9 @@
 #include <QPainter>
 #include <QRect>
 #include <QSize>
+#include "ui_main_window.h"
 
-namespace rqt_image_view {
+namespace monitoring_gui {
 
 /**
  * RatioLayoutedFrame is a layout containing a single frame with a fixed aspect ratio.
@@ -78,13 +77,13 @@ public:
 
   void setInnerFrameFixedSize(const QSize& size);
 
-signals:
+Q_SIGNALS:
 
   void delayed_update();
 
   void mouseLeft(int x, int y);
 
-protected slots:
+protected Q_SLOTS:
 
   void onSmoothImageChanged(bool checked);
 
@@ -112,4 +111,4 @@ private:
 
 }
 
-#endif // rqt_image_view__RatioLayoutedFrame_H
+ // rqt_image_view__RatioLayoutedFrame_H

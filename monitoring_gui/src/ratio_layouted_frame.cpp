@@ -30,12 +30,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <rqt_image_view/ratio_layouted_frame.h>
+#include "../include/monitoring_gui/ratio_layouted_frame.hpp"
 
 #include <assert.h>
 #include <QMouseEvent>
 
-namespace rqt_image_view {
+namespace monitoring_gui {
 
 RatioLayoutedFrame::RatioLayoutedFrame(QWidget* parent, Qt::WindowFlags flags)
   : QFrame()
@@ -70,7 +70,7 @@ void RatioLayoutedFrame::setImage(const QImage& image)//, QMutex* image_mutex)
   qimage_ = image.copy();
   setAspectRatio(qimage_.width(), qimage_.height());
   qimage_mutex_.unlock();
-  emit delayed_update();
+  Q_EMIT delayed_update();
 }
 
 void RatioLayoutedFrame::resizeToFitAspectRatio()
@@ -126,7 +126,7 @@ void RatioLayoutedFrame::setInnerFrameMinimumSize(const QSize& size)
   QSize new_size = size;
   new_size += QSize(2 * border, 2 * border);
   setMinimumSize(new_size);
-  emit delayed_update();
+  Q_EMIT delayed_update();
 }
 
 void RatioLayoutedFrame::setInnerFrameMaximumSize(const QSize& size)
@@ -135,7 +135,7 @@ void RatioLayoutedFrame::setInnerFrameMaximumSize(const QSize& size)
   QSize new_size = size;
   new_size += QSize(2 * border, 2 * border);
   setMaximumSize(new_size);
-  emit delayed_update();
+  Q_EMIT delayed_update();
 }
 
 void RatioLayoutedFrame::setInnerFrameFixedSize(const QSize& size)
@@ -198,7 +198,7 @@ void RatioLayoutedFrame::mousePressEvent(QMouseEvent * mouseEvent)
 {
   if(mouseEvent->button() == Qt::LeftButton)
   {
-    emit mouseLeft(mouseEvent->x(), mouseEvent->y());
+    Q_EMIT mouseLeft(mouseEvent->x(), mouseEvent->y());
   }
   QFrame::mousePressEvent(mouseEvent);
 }
