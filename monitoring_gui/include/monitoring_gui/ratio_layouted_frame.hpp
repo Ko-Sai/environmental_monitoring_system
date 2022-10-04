@@ -39,7 +39,6 @@
 #include <QPainter>
 #include <QRect>
 #include <QSize>
-#include "ui_main_window.h"
 
 namespace monitoring_gui {
 

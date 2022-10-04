@@ -59,7 +59,7 @@
       <string>Record</string>
      </property>
     </widget>
-    <widget class="imageView" name="customWidget" native="true">
+    <widget class="RatioLayoutedFrame" name="customWidget" native="true">
      <property name="geometry">
       <rect>
        <x>19</x>
@@ -247,9 +247,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>imageView</class>
+   <class>RatioLayoutedFrame</class>
    <extends>QWidget</extends>
-   <header>imageview.h</header>
+   <header>ratiolayoutedframe.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

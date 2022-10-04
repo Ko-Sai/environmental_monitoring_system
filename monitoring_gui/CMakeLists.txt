@@ -4,6 +4,7 @@
 
 cmake_minimum_required(VERSION 2.8.0)
 project(monitoring_gui)
+set(CMAKE_AUTOUIC ON)
 
 ##############################################################################
 # Catkin
