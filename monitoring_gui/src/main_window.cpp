@@ -32,6 +32,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 {
 	
 	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
+    //topic = "/camera/rgb/image_raw";
+
+    QObject::connect(&qnode, SIGNAL(imageUpdated(sensor_msgs::Image)), this, SLOT(imageUpdatedView(sensor_msgs::Image)));
     
 }
 
@@ -69,4 +72,22 @@ MainWindow::~MainWindow() {}
 void monitoring_gui::MainWindow::on_forwardButton_clicked()
 {
 
+}
+
+
+void monitoring_gui::MainWindow::on_startButton_clicked()
+{
+    conversion_mat_.release();
+
+    subscriber_.shutdown();
+
+    // reset image on topic change
+    ui.image_frame->setImage(QImage());
+
+}
+
+
+void monitoring_gui::MainWindow::imageUpdatedView(sensor_msgs::Image img_data)
+{
+    std::cout<<"Here"<<endl;
 }

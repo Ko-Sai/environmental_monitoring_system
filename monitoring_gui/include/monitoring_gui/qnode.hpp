@@ -24,6 +24,7 @@
 #include <string>
 #include <QThread>
 #include <QStringListModel>
+#include <sensor_msgs/Image.h>
 
 
 /*****************************************************************************
@@ -58,16 +59,22 @@ public:
 
 	QStringListModel* loggingModel() { return &logging_model; }
 	void log( const LogLevel &level, const std::string &msg);
+	void callbackImage(sensor_msgs::Image img_data);
 
 Q_SIGNALS:
 	void loggingUpdated();
     void rosShutdown();
+    void imageUpdated(sensor_msgs::Image img_data);
 
 private:
 	int init_argc;
 	char** init_argv;
+
 	ros::Publisher chatter_publisher;
+	ros::Subscriber image_subscriber;
+
     QStringListModel logging_model;
+    sensor_msgs::Image image_data;
 };
 
 }  // namespace monitoring_gui

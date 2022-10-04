@@ -49,6 +49,7 @@ bool QNode::init() {
 	ros::NodeHandle n;
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+	image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
 	start();
 	return true;
 }
@@ -122,6 +123,14 @@ void QNode::log( const LogLevel &level, const std::string &msg) {
 	QVariant new_row(QString(logging_model_msg.str().c_str()));
 	logging_model.setData(logging_model.index(logging_model.rowCount()-1),new_row);
 	Q_EMIT loggingUpdated(); // used to readjust the scrollbar
+}
+
+void QNode::callbackImage(sensor_msgs::Image img_data)
+{
+
+	image_data = img_data;
+
+	Q_EMIT imageUpdated(image_data);
 }
 
 }  // namespace monitoring_gui

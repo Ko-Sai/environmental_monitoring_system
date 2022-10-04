@@ -59,7 +59,7 @@
       <string>Record</string>
      </property>
     </widget>
-    <widget class="RatioLayoutedFrame" name="customWidget" native="true">
+    <widget class="RatioLayoutedFrame" name="image_frame" native="true">
      <property name="geometry">
       <rect>
        <x>19</x>
