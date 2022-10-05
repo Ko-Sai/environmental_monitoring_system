@@ -30,7 +30,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 	: QMainWindow(parent)
 	, qnode(argc,argv)
 {
-	
+	qnode.init();
 	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
     //topic = "/camera/rgb/image_raw";
 
@@ -118,3 +118,4 @@ void monitoring_gui::MainWindow::imageUpdatedView(sensor_msgs::Image img_data)
 {
     std::cout<<"Here"<<endl;
 }
+

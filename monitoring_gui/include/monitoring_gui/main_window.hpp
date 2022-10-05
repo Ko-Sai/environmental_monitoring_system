@@ -21,6 +21,7 @@
 #include <opencv2/core/core.hpp>
 
 #include <QImage>
+#include <QTimer>
 
 /*****************************************************************************
 ** Namespace
@@ -71,14 +72,17 @@ private Q_SLOTS:
     void on_leftButton_clicked();
     void on_rightButton_clicked();
     void on_stopButton_clicked();
-    
+
     void on_startButton_clicked();
     void imageUpdatedView(sensor_msgs::Image img_data);
+
+    // void spin_ros();
 
 private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
     std::string topic;
+
 };
 
 }  // namespace monitoring_gui

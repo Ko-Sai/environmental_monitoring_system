@@ -30,7 +30,9 @@ namespace monitoring_gui {
 QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
 	init_argv(argv)
-	{}
+	{
+		std::cout<<"here1"<<std::endl;
+	}
 
 QNode::~QNode() {
     if(ros::isStarted()) {
@@ -42,13 +44,15 @@ QNode::~QNode() {
 
 bool QNode::init() {
 	ros::init(init_argc,init_argv,"monitoring_gui");
+	std::cout<<"here2"<<std::endl;
 	if ( ! ros::master::check() ) {
 		return false;
 	}
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1);
+	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 	image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
 	temp_subscriber = n.subscribe("/gazebo/temperature_data", 5, &QNode::callbackTemp, this);
 	humidity_subscriber = n.subscribe("/gazebo/humidity_data", 5, &QNode::callbackHumidity, this);
@@ -58,6 +62,7 @@ bool QNode::init() {
 
 bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	std::map<std::string,std::string> remappings;
+	std::cout<<"here3"<<std::endl;
 	remappings["__master"] = master_url;
 	remappings["__hostname"] = host_url;
 	ros::init(remappings,"monitoring_gui");
@@ -67,14 +72,14 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
-	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
+	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1);
+	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 	start();
 	return true;
 }
 
 void QNode::run() {
-	ros::Rate loop_rate(1);
+	ros::Rate loop_rate(30);
 	int count = 0;
 	while ( ros::ok() ) {
 
@@ -82,7 +87,9 @@ void QNode::run() {
 		std::stringstream ss;
 		ss << "hello world " << count;
 		msg.data = ss.str();
+		std::cout<<"here4"<<std::endl;
 		chatter_publisher.publish(msg);
+		cmd_vel_publisher.publish(cmd_vel_msg);
 		log(Info,std::string("I sent: ")+msg.data);
 		ros::spinOnce();
 		loop_rate.sleep();
@@ -154,37 +161,54 @@ void QNode::callbackHumidity(std_msgs::Float64 humidity_data)
 
 void QNode::set_forward_speed()
 {
+
 	std::cout<<"forward"<<std::endl;
-	pub_cmd_vel();
+	cmd_vel_msg.linear.x = 0.4;
+	cmd_vel_msg.angular.z = 0.0;
+
 }
 
 void QNode::set_backward_speed()
 {
+
 	std::cout<<"backward"<<std::endl;
-	pub_cmd_vel();
+	cmd_vel_msg.linear.x = -0.4;
+	cmd_vel_msg.angular.z = 0.0;
+
 }
 
 void QNode::set_left_speed()
 {
+
 	std::cout<<"left"<<std::endl;
-	pub_cmd_vel();
+	cmd_vel_msg.linear.x = 0.0;
+	cmd_vel_msg.angular.z = 0.3;
+
 }
 
 void QNode::set_right_speed()
 {
+
 	std::cout<<"right"<<std::endl;
-	pub_cmd_vel();
+	cmd_vel_msg.linear.x = 0.0;
+	cmd_vel_msg.angular.z = -0.3;
+
 }
 
 void QNode::set_stop_speed()
 {
+
 	std::cout<<"stop"<<std::endl;
-	pub_cmd_vel();
+	cmd_vel_msg.linear.x = 0.0;
+	cmd_vel_msg.angular.z = 0.0;
+	
 }
 
 void QNode::pub_cmd_vel()
 {
 	std::cout<<"publishing"<<std::endl;
+	cmd_vel_publisher.publish(cmd_vel_msg);
 }
 
 }  // namespace monitoring_gui
+
