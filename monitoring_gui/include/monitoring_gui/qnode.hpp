@@ -69,6 +69,8 @@ Q_SIGNALS:
 	void loggingUpdated();
     void rosShutdown();
     void imageUpdated(sensor_msgs::Image img_data);
+    void tempUpdated(std_msgs::Float64 temp_data);
+    void humidityUpdated(std_msgs::Float64 humidity_data);
 
 public Q_SLOTS:
 	void set_forward_speed();
@@ -81,7 +83,6 @@ private:
 	int init_argc;
 	char** init_argv;
 
-	ros::Publisher chatter_publisher;
 	ros::Publisher cmd_vel_publisher;
 	ros::Subscriber image_subscriber;
 	ros::Subscriber temp_subscriber;

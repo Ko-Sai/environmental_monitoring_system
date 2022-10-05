@@ -19,6 +19,7 @@
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/Image.h>
 #include <opencv2/core/core.hpp>
+#include <std_msgs/Float64.h>
 
 #include <QImage>
 #include <QTimer>
@@ -66,7 +67,7 @@ protected:
 
     cv::Mat conversion_mat_;
 
-private Q_SLOTS:
+public Q_SLOTS:
     void on_forwardButton_clicked();
     void on_backwardButton_clicked();
     void on_leftButton_clicked();
@@ -75,6 +76,8 @@ private Q_SLOTS:
 
     void on_startButton_clicked();
     void imageUpdatedView(sensor_msgs::Image img_data);
+    void tempUpdatedView(std_msgs::Float64 temp_data);
+    void humidityUpdatedView(std_msgs::Float64 humidity_data);
 
     // void spin_ros();
 

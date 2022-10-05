@@ -35,6 +35,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     //topic = "/camera/rgb/image_raw";
 
     QObject::connect(&qnode, SIGNAL(imageUpdated(sensor_msgs::Image)), this, SLOT(imageUpdatedView(sensor_msgs::Image)));
+    QObject::connect(&qnode, SIGNAL(tempUpdated(std_msgs::Float64)), this, SLOT(tempUpdatedView(std_msgs::Float64)));
+    QObject::connect(&qnode, SIGNAL(humidityUpdated(std_msgs::Float64)), this, SLOT(humidityUpdatedView(std_msgs::Float64)));
 
     QObject::connect(this, SIGNAL(clicked_forward()), &qnode, SLOT(set_forward_speed()));
     QObject::connect(this, SIGNAL(clicked_backward()), &qnode, SLOT(set_backward_speed()));
@@ -116,6 +118,16 @@ void monitoring_gui::MainWindow::on_startButton_clicked()
 
 void monitoring_gui::MainWindow::imageUpdatedView(sensor_msgs::Image img_data)
 {
-    std::cout<<"Here"<<endl;
+    std::cout<<"Getting image data"<<std::endl;
+}
+
+void monitoring_gui::MainWindow::tempUpdatedView(std_msgs::Float64 temp_data)
+{
+    std::cout<<"Getting temp data"<<std::endl;
+}
+
+void monitoring_gui::MainWindow::humidityUpdatedView(std_msgs::Float64 humidity_data)
+{
+    std::cout<<"Getting humidity data"<<std::endl;
 }
 

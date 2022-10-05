@@ -42,67 +42,77 @@ QNode::~QNode() {
 	wait();
 }
 
-bool QNode::init() {
-	ros::init(init_argc,init_argv,"monitoring_gui");
-	std::cout<<"here2"<<std::endl;
-	if ( ! ros::master::check() ) {
+bool QNode::init() 
+{
+
+	ros::init(init_argc,init_argv,"monitoring_gui");	
+	if ( ! ros::master::check() )
+	{
 		return false;
 	}
+
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
+
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1);
 	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 	image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
 	temp_subscriber = n.subscribe("/gazebo/temperature_data", 5, &QNode::callbackTemp, this);
 	humidity_subscriber = n.subscribe("/gazebo/humidity_data", 5, &QNode::callbackHumidity, this);
 	start();
 	return true;
+
 }
 
-bool QNode::init(const std::string &master_url, const std::string &host_url) {
+bool QNode::init(const std::string &master_url, const std::string &host_url) 
+{
+
 	std::map<std::string,std::string> remappings;
-	std::cout<<"here3"<<std::endl;
 	remappings["__master"] = master_url;
 	remappings["__hostname"] = host_url;
 	ros::init(remappings,"monitoring_gui");
-	if ( ! ros::master::check() ) {
+
+	if ( ! ros::master::check() ) 
+	{
 		return false;
 	}
+
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
+
 	// Add your ros communications here.
-	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1);
-	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 	start();
 	return true;
+
 }
 
-void QNode::run() {
+void QNode::run() 
+{
+
 	ros::Rate loop_rate(30);
 	int count = 0;
-	while ( ros::ok() ) {
+	while ( ros::ok() ) 
+	{
 
-		std_msgs::String msg;
-		std::stringstream ss;
-		ss << "hello world " << count;
-		msg.data = ss.str();
-		std::cout<<"here4"<<std::endl;
-		chatter_publisher.publish(msg);
-		cmd_vel_publisher.publish(cmd_vel_msg);
-		log(Info,std::string("I sent: ")+msg.data);
+		pub_cmd_vel();
+
 		ros::spinOnce();
 		loop_rate.sleep();
 		++count;
+
 	}
+
 	std::cout << "Ros shutdown, proceeding to close the gui." << std::endl;
 	Q_EMIT rosShutdown(); // used to signal the gui for a shutdown (useful to roslaunch)
 }
 
 
-void QNode::log( const LogLevel &level, const std::string &msg) {
+void QNode::log( const LogLevel &level, const std::string &msg) 
+{
+
 	logging_model.insertRows(logging_model.rowCount(),1);
 	std::stringstream logging_model_msg;
+
 	switch ( level ) {
 		case(Debug) : {
 				ROS_DEBUG_STREAM(msg);
@@ -128,11 +138,14 @@ void QNode::log( const LogLevel &level, const std::string &msg) {
 				ROS_FATAL_STREAM(msg);
 				logging_model_msg << "[FATAL] [" << ros::Time::now() << "]: " << msg;
 				break;
+
 		}
 	}
+
 	QVariant new_row(QString(logging_model_msg.str().c_str()));
 	logging_model.setData(logging_model.index(logging_model.rowCount()-1),new_row);
 	Q_EMIT loggingUpdated(); // used to readjust the scrollbar
+
 }
 
 void QNode::callbackImage(sensor_msgs::Image img_data)
@@ -147,16 +160,18 @@ void QNode::callbackTemp(std_msgs::Float64 temp_data)
 {
 
 	temp_data = temp_data;
+	//std::cout<<"Getting temp data in qnode"<<std::endl;
 
-	Q_EMIT imageUpdated(image_data);
+	Q_EMIT tempUpdated(temp_data);
 }
 
 void QNode::callbackHumidity(std_msgs::Float64 humidity_data)
 {
 
 	humidity_data = humidity_data;
+	//std::cout<<"Getting humidity data in qnode"<<std::endl;
 
-	Q_EMIT imageUpdated(image_data);
+	Q_EMIT humidityUpdated(humidity_data);
 }
 
 void QNode::set_forward_speed()
@@ -206,7 +221,6 @@ void QNode::set_stop_speed()
 
 void QNode::pub_cmd_vel()
 {
-	std::cout<<"publishing"<<std::endl;
 	cmd_vel_publisher.publish(cmd_vel_msg);
 }
 
