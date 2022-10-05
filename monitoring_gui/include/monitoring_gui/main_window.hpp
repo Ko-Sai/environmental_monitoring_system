@@ -53,6 +53,13 @@ public Q_SLOTS:
     ** Manual connections
     *******************************************/
 
+Q_SIGNALS:
+    void clicked_forward();
+    void clicked_backward();
+    void clicked_left();
+    void clicked_right();
+    void clicked_stop();
+
 protected:
     image_transport::Subscriber subscriber_;
 
@@ -60,6 +67,11 @@ protected:
 
 private Q_SLOTS:
     void on_forwardButton_clicked();
+    void on_backwardButton_clicked();
+    void on_leftButton_clicked();
+    void on_rightButton_clicked();
+    void on_stopButton_clicked();
+    
     void on_startButton_clicked();
     void imageUpdatedView(sensor_msgs::Image img_data);
 

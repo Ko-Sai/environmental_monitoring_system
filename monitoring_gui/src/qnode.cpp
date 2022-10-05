@@ -66,6 +66,7 @@ bool QNode::init(const std::string &master_url, const std::string &host_url) {
 	ros::NodeHandle n;
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
+	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
 	start();
 	return true;
 }
@@ -131,6 +132,41 @@ void QNode::callbackImage(sensor_msgs::Image img_data)
 	image_data = img_data;
 
 	Q_EMIT imageUpdated(image_data);
+}
+
+void QNode::set_forward_speed()
+{
+	std::cout<<"forward"<<std::endl;
+	pub_cmd_vel();
+}
+
+void QNode::set_backward_speed()
+{
+	std::cout<<"backward"<<std::endl;
+	pub_cmd_vel();
+}
+
+void QNode::set_left_speed()
+{
+	std::cout<<"left"<<std::endl;
+	pub_cmd_vel();
+}
+
+void QNode::set_right_speed()
+{
+	std::cout<<"right"<<std::endl;
+	pub_cmd_vel();
+}
+
+void QNode::set_stop_speed()
+{
+	std::cout<<"stop"<<std::endl;
+	pub_cmd_vel();
+}
+
+void QNode::pub_cmd_vel()
+{
+	std::cout<<"publishing"<<std::endl;
 }
 
 }  // namespace monitoring_gui

@@ -25,6 +25,7 @@
 #include <QThread>
 #include <QStringListModel>
 #include <sensor_msgs/Image.h>
+#include <geometry_msgs/Twist.h>
 
 
 /*****************************************************************************
@@ -66,15 +67,26 @@ Q_SIGNALS:
     void rosShutdown();
     void imageUpdated(sensor_msgs::Image img_data);
 
+public Q_SLOTS:
+	void set_forward_speed();
+	void set_backward_speed();
+	void set_left_speed();
+	void set_right_speed();
+	void set_stop_speed();
+
 private:
 	int init_argc;
 	char** init_argv;
 
 	ros::Publisher chatter_publisher;
+	ros::Publisher cmd_vel_publisher;
 	ros::Subscriber image_subscriber;
 
     QStringListModel logging_model;
     sensor_msgs::Image image_data;
+    geometry_msgs::Twist cmd_vel_msg;
+
+    void pub_cmd_vel();
 };
 
 }  // namespace monitoring_gui

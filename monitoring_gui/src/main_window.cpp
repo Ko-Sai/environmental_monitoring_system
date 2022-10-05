@@ -35,6 +35,12 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     //topic = "/camera/rgb/image_raw";
 
     QObject::connect(&qnode, SIGNAL(imageUpdated(sensor_msgs::Image)), this, SLOT(imageUpdatedView(sensor_msgs::Image)));
+
+    QObject::connect(this, SIGNAL(clicked_forward()), &qnode, SLOT(set_forward_speed()));
+    QObject::connect(this, SIGNAL(clicked_backward()), &qnode, SLOT(set_backward_speed()));
+    QObject::connect(this, SIGNAL(clicked_left()), &qnode, SLOT(set_left_speed()));
+    QObject::connect(this, SIGNAL(clicked_right()), &qnode, SLOT(set_right_speed()));
+    QObject::connect(this, SIGNAL(clicked_stop()), &qnode, SLOT(set_stop_speed()));
     
 }
 
@@ -69,9 +75,30 @@ MainWindow::~MainWindow() {}
 
 
 }  // namespace monitoring_gui
+
 void monitoring_gui::MainWindow::on_forwardButton_clicked()
 {
+    Q_EMIT clicked_forward();
+}
 
+void monitoring_gui::MainWindow::on_backwardButton_clicked()
+{
+    Q_EMIT clicked_backward();
+}
+
+void monitoring_gui::MainWindow::on_leftButton_clicked()
+{
+    Q_EMIT clicked_left();
+}
+
+void monitoring_gui::MainWindow::on_rightButton_clicked()
+{
+    Q_EMIT clicked_right();
+}
+
+void monitoring_gui::MainWindow::on_stopButton_clicked()
+{
+    Q_EMIT clicked_stop();
 }
 
 
