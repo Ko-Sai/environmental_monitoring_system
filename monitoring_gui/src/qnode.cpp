@@ -50,6 +50,8 @@ bool QNode::init() {
 	// Add your ros communications here.
 	chatter_publisher = n.advertise<std_msgs::String>("chatter", 1000);
 	image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
+	temp_subscriber = n.subscribe("/gazebo/temperature_data", 5, &QNode::callbackTemp, this);
+	humidity_subscriber = n.subscribe("/gazebo/humidity_data", 5, &QNode::callbackHumidity, this);
 	start();
 	return true;
 }
@@ -130,6 +132,22 @@ void QNode::callbackImage(sensor_msgs::Image img_data)
 {
 
 	image_data = img_data;
+
+	Q_EMIT imageUpdated(image_data);
+}
+
+void QNode::callbackTemp(std_msgs::Float64 temp_data)
+{
+
+	temp_data = temp_data;
+
+	Q_EMIT imageUpdated(image_data);
+}
+
+void QNode::callbackHumidity(std_msgs::Float64 humidity_data)
+{
+
+	humidity_data = humidity_data;
 
 	Q_EMIT imageUpdated(image_data);
 }

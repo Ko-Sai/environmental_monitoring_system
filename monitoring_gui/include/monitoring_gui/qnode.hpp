@@ -26,6 +26,7 @@
 #include <QStringListModel>
 #include <sensor_msgs/Image.h>
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/Float64.h>
 
 
 /*****************************************************************************
@@ -61,6 +62,8 @@ public:
 	QStringListModel* loggingModel() { return &logging_model; }
 	void log( const LogLevel &level, const std::string &msg);
 	void callbackImage(sensor_msgs::Image img_data);
+	void callbackTemp(std_msgs::Float64 temp_data);
+	void callbackHumidity(std_msgs::Float64 humidity_data);
 
 Q_SIGNALS:
 	void loggingUpdated();
@@ -81,9 +84,13 @@ private:
 	ros::Publisher chatter_publisher;
 	ros::Publisher cmd_vel_publisher;
 	ros::Subscriber image_subscriber;
+	ros::Subscriber temp_subscriber;
+	ros::Subscriber humidity_subscriber;
 
     QStringListModel logging_model;
     sensor_msgs::Image image_data;
+    std_msgs::Float64 temp_data;
+    std_msgs::Float64 humidity_data;
     geometry_msgs::Twist cmd_vel_msg;
 
     void pub_cmd_vel();
