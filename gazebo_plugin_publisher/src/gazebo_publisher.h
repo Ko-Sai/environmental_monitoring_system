@@ -4,7 +4,7 @@
 #include "gazebo/common/Plugin.hh"
 #include "gazebo/common/Events.hh"
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 
 
 
@@ -26,8 +26,8 @@ class TempHumidityPublisher : public WorldPlugin
         ros::Publisher humidity_publisher;
         event::ConnectionPtr connection;
 
-        std_msgs::Float64 temp_data;
-        std_msgs::Float64 humidity_data;
+        std_msgs::Float32 temp_data;
+        std_msgs::Float32 humidity_data;
 
 };
 

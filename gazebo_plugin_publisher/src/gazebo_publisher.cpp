@@ -6,8 +6,8 @@ GZ_REGISTER_WORLD_PLUGIN(TempHumidityPublisher)
 TempHumidityPublisher::TempHumidityPublisher()
 {
 
-    temp_publisher     = nh.advertise<std_msgs::Float64>("/gazebo/temperature_data", 1);
-    humidity_publisher = nh.advertise<std_msgs::Float64>("/gazebo/humidity_data", 1);
+    temp_publisher     = nh.advertise<std_msgs::Float32>("/gazebo/temperature_data", 1);
+    humidity_publisher = nh.advertise<std_msgs::Float32>("/gazebo/humidity_data", 1);
 
 }
 

@@ -148,30 +148,28 @@ void QNode::log( const LogLevel &level, const std::string &msg)
 
 }
 
-void QNode::callbackImage(sensor_msgs::Image img_data)
+void QNode::callbackImage(sensor_msgs::Image img_msg)
 {
 
-	image_data = img_data;
+	image_data = img_msg;
 
-	Q_EMIT imageUpdated(image_data);
+	Q_EMIT imageUpdated();
 }
 
-void QNode::callbackTemp(std_msgs::Float64 temp_data)
+void QNode::callbackTemp(std_msgs::Float32 temp_msg)
 {
 
-	temp_data = temp_data;
-	//std::cout<<"Getting temp data in qnode"<<std::endl;
+	temp_data = temp_msg.data;
 
-	Q_EMIT tempUpdated(temp_data);
+	Q_EMIT tempUpdated();
 }
 
-void QNode::callbackHumidity(std_msgs::Float64 humidity_data)
+void QNode::callbackHumidity(std_msgs::Float32 humidity_msg)
 {
 
-	humidity_data = humidity_data;
-	//std::cout<<"Getting humidity data in qnode"<<std::endl;
+	humidity_data = humidity_msg.data;
 
-	Q_EMIT humidityUpdated(humidity_data);
+	Q_EMIT humidityUpdated();
 }
 
 void QNode::set_forward_speed()

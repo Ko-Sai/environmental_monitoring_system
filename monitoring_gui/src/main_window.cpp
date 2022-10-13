@@ -34,9 +34,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
     //topic = "/camera/rgb/image_raw";
 
-    QObject::connect(&qnode, SIGNAL(imageUpdated(sensor_msgs::Image)), this, SLOT(imageUpdatedView(sensor_msgs::Image)));
-    QObject::connect(&qnode, SIGNAL(tempUpdated(std_msgs::Float64)), this, SLOT(tempUpdatedView(std_msgs::Float64)));
-    QObject::connect(&qnode, SIGNAL(humidityUpdated(std_msgs::Float64)), this, SLOT(humidityUpdatedView(std_msgs::Float64)));
+    QObject::connect(&qnode, SIGNAL(imageUpdated()), this, SLOT(imageUpdatedView()));
+    QObject::connect(&qnode, SIGNAL(tempUpdated()), this, SLOT(tempUpdatedView()));
+    QObject::connect(&qnode, SIGNAL(humidityUpdated()), this, SLOT(humidityUpdatedView()));
 
     QObject::connect(this, SIGNAL(clicked_forward()), &qnode, SLOT(set_forward_speed()));
     QObject::connect(this, SIGNAL(clicked_backward()), &qnode, SLOT(set_backward_speed()));
@@ -116,18 +116,21 @@ void monitoring_gui::MainWindow::on_startButton_clicked()
 }
 
 
-void monitoring_gui::MainWindow::imageUpdatedView(sensor_msgs::Image img_data)
+void monitoring_gui::MainWindow::imageUpdatedView()
 {
-    std::cout<<"Getting image data"<<std::endl;
+    //std::cout<<"Getting image data"<<std::endl;
 }
 
-void monitoring_gui::MainWindow::tempUpdatedView(std_msgs::Float64 temp_data)
+void monitoring_gui::MainWindow::tempUpdatedView()
 {
-    std::cout<<"Getting temp data"<<std::endl;
+    QString temp_str = QString::number(qnode.temp_data, 'f', 2);
+    ui.tempDisplay->setText(temp_str);
 }
 
-void monitoring_gui::MainWindow::humidityUpdatedView(std_msgs::Float64 humidity_data)
+void monitoring_gui::MainWindow::humidityUpdatedView()
 {
-    std::cout<<"Getting humidity data"<<std::endl;
+    //std::cout<<"Getting humidity data"<<std::endl;
+    QString humidity_str = QString::number(qnode.humidity_data, 'f', 2);
+    ui.humidityDisplay->setText(humidity_str);
 }
 

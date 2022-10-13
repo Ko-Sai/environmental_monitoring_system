@@ -75,9 +75,9 @@ public Q_SLOTS:
     void on_stopButton_clicked();
 
     void on_startButton_clicked();
-    void imageUpdatedView(sensor_msgs::Image img_data);
-    void tempUpdatedView(std_msgs::Float64 temp_data);
-    void humidityUpdatedView(std_msgs::Float64 humidity_data);
+    void imageUpdatedView();
+    void tempUpdatedView();
+    void humidityUpdatedView();
 
     // void spin_ros();
 
