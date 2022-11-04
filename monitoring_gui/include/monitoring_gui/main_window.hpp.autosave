@@ -24,7 +24,6 @@
 
 #include <QImage>
 #include <QTimer>
-#include <QProcess>
 
 /*****************************************************************************
 ** Namespace
@@ -75,7 +74,6 @@ public Q_SLOTS:
     void on_leftButton_clicked();
     void on_rightButton_clicked();
     void on_stopButton_clicked();
-    void on_recordButton_clicked();
 
     void on_playButton_clicked();
     void imageUpdatedView();
@@ -84,13 +82,14 @@ public Q_SLOTS:
 
     // void spin_ros();
 
+private slots:
+    void on_recordButton_clicked();
+    
 private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
     std::string topic;
     int flag = 0;
-
-    QProcess *rosbag_play_proc;
 
 };
 

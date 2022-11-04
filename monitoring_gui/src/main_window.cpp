@@ -1,10 +1,3 @@
-/**
- * @file /src/main_window.cpp
- *
- * @brief Implementation for the qt gui.
- *
- * @date February 2011
- **/
 /*****************************************************************************
 ** Includes
 *****************************************************************************/
@@ -43,40 +36,16 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     QObject::connect(this, SIGNAL(clicked_left()), &qnode, SLOT(set_left_speed()));
     QObject::connect(this, SIGNAL(clicked_right()), &qnode, SLOT(set_right_speed()));
     QObject::connect(this, SIGNAL(clicked_stop()), &qnode, SLOT(set_stop_speed()));
+
+    rosbag_play_proc = new QProcess(this);
     
 }
 
 MainWindow::~MainWindow() {}
 
-/*****************************************************************************
-** Implementation [Slots]
-*****************************************************************************/
-
-
-
-/*****************************************************************************
-** Implemenation [Slots][manually connected]
-*****************************************************************************/
-
-/**
- * This function is signalled by the underlying model. When the model changes,
- * this will drop the cursor down to the last line in the QListview to ensure
- * the user can always see the latest log message.
- */
-
-
-/*****************************************************************************
-** Implementation [Menu]
-*****************************************************************************/
-
-
-/*****************************************************************************
-** Implementation [Configuration]
-*****************************************************************************/
-
-
 
 }  // namespace monitoring_gui
+
 
 void monitoring_gui::MainWindow::on_forwardButton_clicked()
 {
@@ -104,21 +73,27 @@ void monitoring_gui::MainWindow::on_stopButton_clicked()
 }
 
 
-void monitoring_gui::MainWindow::on_startButton_clicked()
+void monitoring_gui::MainWindow::on_playButton_clicked()
 {
-    conversion_mat_.release();
 
-    subscriber_.shutdown();
+    // rosbag_play_proc->start("rosbag record -o " + QString::fromStdString(std::to_string(duration))+ " "+ open_file_path);
+    rosbag_play_proc->start("rosbag record -o dummy.bag /camera/rgb/image_raw __name:=my_bag");
+    std::cout<<"Start recording data! "<<std::endl;
 
-    // reset image on topic change
-    ui.image_frame->setImage(QImage());
-
+    // conversion_mat_.release();
+    // subscriber_.shutdown();
 }
 
 
 void monitoring_gui::MainWindow::imageUpdatedView()
 {
-    //std::cout<<"Getting image data"<<std::endl;
+
+    cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(qnode.image_data, sensor_msgs::image_encodings::RGB8);
+    conversion_mat_ = cv_ptr->image;
+
+    QImage image(conversion_mat_.data, conversion_mat_.cols, conversion_mat_.rows, conversion_mat_.step[0], QImage::Format_RGB888);
+    ui.imageLabel->setPixmap(QPixmap::fromImage(image));
+    
 }
 
 void monitoring_gui::MainWindow::tempUpdatedView()
@@ -129,8 +104,15 @@ void monitoring_gui::MainWindow::tempUpdatedView()
 
 void monitoring_gui::MainWindow::humidityUpdatedView()
 {
-    //std::cout<<"Getting humidity data"<<std::endl;
     QString humidity_str = QString::number(qnode.humidity_data, 'f', 2);
     ui.humidityDisplay->setText(humidity_str);
 }
 
+
+void monitoring_gui::MainWindow::on_recordButton_clicked()
+{
+
+    rosbag_play_proc->start("rosnode kill /my_bag");
+    std::cout<<"Stop recording data! "<<std::endl;
+
+}

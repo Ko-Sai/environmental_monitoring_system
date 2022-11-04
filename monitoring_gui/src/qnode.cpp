@@ -53,10 +53,13 @@ bool QNode::init()
 
 	ros::start(); // explicitly needed since our nodehandle is going out of scope.
 	ros::NodeHandle n;
+	image_transport::ImageTransport it(n);
+	image_transport::TransportHints hints("raw");
+	subscriber_ = it.subscribe("/camera/rgb/image_raw", 1, &QNode::callbackImage, this, hints);
 
 	// Add your ros communications here.
 	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-	image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
+	// image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
 	temp_subscriber = n.subscribe("/gazebo/temperature_data", 5, &QNode::callbackTemp, this);
 	humidity_subscriber = n.subscribe("/gazebo/humidity_data", 5, &QNode::callbackHumidity, this);
 	start();
@@ -148,7 +151,7 @@ void QNode::log( const LogLevel &level, const std::string &msg)
 
 }
 
-void QNode::callbackImage(sensor_msgs::Image img_msg)
+void QNode::callbackImage(const sensor_msgs::Image::ConstPtr& img_msg)
 {
 
 	image_data = img_msg;
