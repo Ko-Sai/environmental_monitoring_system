@@ -88,7 +88,7 @@ private:
 	Ui::MainWindowDesign ui;
 	QNode qnode;
     std::string topic;
-    int flag = 0;
+    int index;
 
     QProcess *rosbag_play_proc;
 
