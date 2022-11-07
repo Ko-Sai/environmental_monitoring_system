@@ -25,7 +25,6 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
 {
 	qnode.init();
 	ui.setupUi(this); // Calling this incidentally connects all ui's triggers to on_...() callbacks in this class.
-    //topic = "/camera/rgb/image_raw";
 
     QObject::connect(&qnode, SIGNAL(imageUpdated()), this, SLOT(imageUpdatedView()));
     QObject::connect(&qnode, SIGNAL(tempUpdated()), this, SLOT(tempUpdatedView()));
@@ -74,19 +73,25 @@ void monitoring_gui::MainWindow::on_stopButton_clicked()
 }
 
 
-void monitoring_gui::MainWindow::on_playButton_clicked()
+void monitoring_gui::MainWindow::on_startRecordButton_clicked()
 {
 
-
-    // rosbag_play_proc->start("rosbag record -o " + QString::fromStdString(std::to_string(duration))+ " "+ open_file_path);
+    ui.startRecordButton->setEnabled(false);
     rosbag_play_proc->start("rosbag record -o dummy_" + QString::fromStdString(std::to_string(index)) + ".bag /camera/rgb/image_raw __name:=my_bag");
     std::cout<<"Start recording data! "<<std::endl;
     index += 1;
 
-    // conversion_mat_.release();
-    // subscriber_.shutdown();
 }
 
+void monitoring_gui::MainWindow::on_stopRecordButton_clicked()
+{
+
+    ui.startRecordButton->setEnabled(true);
+    rosbag_play_proc->start("rosnode kill /my_bag");
+    rosbag_play_proc->terminate();
+    std::cout<<"Stop recording data! "<<std::endl;
+
+}
 
 void monitoring_gui::MainWindow::imageUpdatedView()
 {
@@ -99,11 +104,13 @@ void monitoring_gui::MainWindow::imageUpdatedView()
     
 }
 
+
 void monitoring_gui::MainWindow::tempUpdatedView()
 {
     QString temp_str = QString::number(qnode.temp_data, 'f', 2);
     ui.tempDisplay->setText(temp_str);
 }
+
 
 void monitoring_gui::MainWindow::humidityUpdatedView()
 {
@@ -112,11 +119,4 @@ void monitoring_gui::MainWindow::humidityUpdatedView()
 }
 
 
-void monitoring_gui::MainWindow::on_recordButton_clicked()
-{
 
-    rosbag_play_proc->start("rosnode kill /my_bag");
-    rosbag_play_proc->terminate();
-    std::cout<<"Stop recording data! "<<std::endl;
-
-}

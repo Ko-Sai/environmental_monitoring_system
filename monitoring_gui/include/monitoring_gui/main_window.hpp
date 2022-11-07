@@ -75,9 +75,8 @@ public Q_SLOTS:
     void on_leftButton_clicked();
     void on_rightButton_clicked();
     void on_stopButton_clicked();
-    void on_recordButton_clicked();
-
-    void on_playButton_clicked();
+    void on_stopRecordButton_clicked();
+    void on_startRecordButton_clicked();
     void imageUpdatedView();
     void tempUpdatedView();
     void humidityUpdatedView();

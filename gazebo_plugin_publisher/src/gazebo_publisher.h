@@ -29,6 +29,9 @@ class TempHumidityPublisher : public WorldPlugin
         std_msgs::Float32 temp_data;
         std_msgs::Float32 humidity_data;
 
+        float dummy_temp_data;
+        float dummy_humidity_data;
+
 };
 
 
