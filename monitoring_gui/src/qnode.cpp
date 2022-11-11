@@ -60,8 +60,8 @@ bool QNode::init()
 	// Add your ros communications here.
 	cmd_vel_publisher = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
 	// image_subscriber = n.subscribe("/camera/rgb/image_raw", 5, &QNode::callbackImage, this);
-	temp_subscriber = n.subscribe("/gazebo/temperature_data", 5, &QNode::callbackTemp, this);
-	humidity_subscriber = n.subscribe("/gazebo/humidity_data", 5, &QNode::callbackHumidity, this);
+	temp_subscriber = n.subscribe("/dummy/temperature_data", 5, &QNode::callbackTemp, this);
+	humidity_subscriber = n.subscribe("/dummy/humidity_data", 5, &QNode::callbackHumidity, this);
 	start();
 	return true;
 
@@ -179,7 +179,7 @@ void QNode::set_forward_speed()
 {
 
 	std::cout<<"forward"<<std::endl;
-	cmd_vel_msg.linear.x = 0.4;
+	cmd_vel_msg.linear.x = 0.3;
 	cmd_vel_msg.angular.z = 0.0;
 
 }
@@ -188,7 +188,7 @@ void QNode::set_backward_speed()
 {
 
 	std::cout<<"backward"<<std::endl;
-	cmd_vel_msg.linear.x = -0.4;
+	cmd_vel_msg.linear.x = -0.3;
 	cmd_vel_msg.angular.z = 0.0;
 
 }

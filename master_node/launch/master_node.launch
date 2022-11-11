@@ -5,10 +5,16 @@
   <arg name="y_pos" default="-0.5"/>
   <arg name="z_pos" default="0.0"/>
 
+  <arg name="choice" default="2"/>
+
+  <!-- Data Publisher Node -->
+  <node name="master_node" pkg="master_node" type="master_node" output="screen">
+    	<param name="m_world_weather"              type="int"               value="$(arg choice)"/>
+  </node>
 
   <!-- Gazebo Node -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world"/>
+    <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/small_house.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>

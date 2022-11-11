@@ -1,0 +1,7 @@
+<launch>
+
+    <node name="master_node" pkg="master_node" type="master_node" output="screen">
+    	<param name="m_world_weather"              type="int"               value="0"/>
+    </node>
+
+</launch>
