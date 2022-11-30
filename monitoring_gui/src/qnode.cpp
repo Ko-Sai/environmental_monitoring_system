@@ -10,9 +10,7 @@
 ** Includes
 *****************************************************************************/
 
-#include <ros/ros.h>
 #include <ros/network.h>
-#include <string>
 #include <std_msgs/String.h>
 #include <sstream>
 #include "../include/monitoring_gui/qnode.hpp"
@@ -31,7 +29,7 @@ QNode::QNode(int argc, char** argv ) :
 	init_argc(argc),
 	init_argv(argv)
 	{
-		std::cout<<"here1"<<std::endl;
+		 
 	}
 
 QNode::~QNode() {
@@ -42,10 +40,22 @@ QNode::~QNode() {
 	wait();
 }
 
+bool QNode::getParameters(ros::NodeHandle &n_handle)
+{
+
+	n_handle.param("m_world_weather"             , m_rosbag_name        , std::string("dummy"));
+
+}
+
+
 bool QNode::init() 
 {
 
-	ros::init(init_argc,init_argv,"monitoring_gui");	
+	ros::init(init_argc,init_argv,"monitoring_gui");
+	
+	ros::NodeHandle nh_private("~");
+	getParameters(nh_private);	
+
 	if ( ! ros::master::check() )
 	{
 		return false;

@@ -88,6 +88,7 @@ private:
 	QNode qnode;
     std::string topic;
     int index;
+    std::string rosbag_name;
 
     QProcess *rosbag_play_proc;
 

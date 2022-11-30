@@ -30,7 +30,7 @@ class dummyPublisher
 	    string m_topic_humidity_data; 
 
 	    //Variables 
-	    int m_world_weather;
+	    string m_world_weather;
 	    std_msgs::Float32 temp_data;
         std_msgs::Float32 humidity_data;
 
@@ -41,8 +41,18 @@ class dummyPublisher
         float mid_h_temp;
         float mid_l_temp;
 
+        float hot_h_humidity;
+        float hot_l_humidity;
+        float cold_h_humidity;
+        float cold_l_humidity;
+        float mid_h_humidity;
+        float mid_l_humidity;
+
         float h_temp;
         float l_temp;
+
+        float h_humidity;
+        float l_humidity;
 
         float dummy_temp_data;
         float dummy_humidity_data;

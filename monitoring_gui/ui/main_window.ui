@@ -33,37 +33,11 @@
     <property name="title">
      <string>        Live Streaming</string>
     </property>
-    <widget class="QPushButton" name="startRecordButton">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>570</y>
-       <width>241</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Record</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="stopRecordButton">
-     <property name="geometry">
-      <rect>
-       <x>278</x>
-       <y>570</y>
-       <width>241</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stop</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="imageLabel">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>40</y>
+       <x>60</x>
+       <y>10</y>
        <width>501</width>
        <height>511</height>
       </rect>
@@ -71,6 +45,42 @@
      <property name="text">
       <string/>
      </property>
+    </widget>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>510</y>
+       <width>501</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <widget class="QPushButton" name="startRecordButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>221</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Record</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="stopRecordButton">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>221</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QGroupBox" name="controlPanelBox">

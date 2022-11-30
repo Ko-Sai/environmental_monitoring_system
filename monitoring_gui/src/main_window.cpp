@@ -35,7 +35,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
     QObject::connect(this, SIGNAL(clicked_left()), &qnode, SLOT(set_left_speed()));
     QObject::connect(this, SIGNAL(clicked_right()), &qnode, SLOT(set_right_speed()));
     QObject::connect(this, SIGNAL(clicked_stop()), &qnode, SLOT(set_stop_speed()));
-
+    
     rosbag_play_proc = new QProcess(this);
     index = 0;
     
@@ -77,7 +77,7 @@ void monitoring_gui::MainWindow::on_startRecordButton_clicked()
 {
 
     ui.startRecordButton->setEnabled(false);
-    rosbag_play_proc->start("rosbag record -o dummy_" + QString::fromStdString(std::to_string(index)) + ".bag /camera/rgb/image_raw __name:=my_bag");
+    rosbag_play_proc->start("rosbag record -o " + QString::fromStdString(qnode.m_rosbag_name)+  QString::fromStdString(std::to_string(index)) + ".bag /camera/rgb/image_raw __name:=my_bag");
     std::cout<<"Start recording data! "<<std::endl;
     index += 1;
 

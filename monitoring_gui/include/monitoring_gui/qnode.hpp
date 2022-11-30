@@ -28,7 +28,7 @@
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float32.h>
-#include <string>
+#include <iostream>
 
 #include <image_transport/image_transport.h>
 
@@ -36,6 +36,7 @@
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
+using namespace std;
 
 namespace monitoring_gui {
 
@@ -72,6 +73,7 @@ public:
 	sensor_msgs::Image::ConstPtr image_data;
     float temp_data;
     float humidity_data;
+    string m_rosbag_name;
 
 Q_SIGNALS:
 	void loggingUpdated();
@@ -102,6 +104,7 @@ private:
     geometry_msgs::Twist cmd_vel_msg;
 
     void pub_cmd_vel();
+    bool getParameters(ros::NodeHandle &n_handle);
 };
 
 }  // namespace monitoring_gui
