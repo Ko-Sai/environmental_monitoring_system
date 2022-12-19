@@ -72,7 +72,7 @@ void dummyPublisher::publish_data()
     // std::cout<<"Random number : "<< 20.0 + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(22.5-20.0))) <<std::endl;
     temp_data.data = dummy_temp_data;
     humidity_data.data = dummy_humidity_data;
- 
+
     temp_publisher.publish(temp_data); 
     humidity_publisher.publish(humidity_data);
 }
