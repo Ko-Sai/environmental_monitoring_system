@@ -11,6 +11,11 @@ Clone this package into your src folder of catkin_workspace:
 cd <yr_catkin_ws>/src
 git clone https://github.com/Ko-Sai/environmental_monitoring_system.git
 
+Then compile with catkin:
+```
+catkin_make
+```
+
 
 ## GUI
 
