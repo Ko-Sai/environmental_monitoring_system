@@ -19,12 +19,16 @@ catkin_make
 
 ## GUI
 
-GUI photo 
+![](assets/monitoring_gui.png)
 
 
 ## Testing with Sample Environments
 
-Testing environment photo
+<p float="left">
+  <img src="assets/office_environment.png" width="49%" />
+  <img src="assets/warehouse_environment.png" width="49%" /> 
+  
+</p>
 
 ## Usage
 
