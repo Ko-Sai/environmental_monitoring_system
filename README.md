@@ -8,11 +8,14 @@ This project aims to monitor the surroundings and the environmental information 
 
 Clone this package into your src folder of catkin_workspace:
 
+```
 cd <yr_catkin_ws>/src
 git clone https://github.com/Ko-Sai/environmental_monitoring_system.git
+```
 
 Then compile with catkin:
 ```
+cd ..
 catkin_make
 ```
 
@@ -25,8 +28,8 @@ catkin_make
 ## Testing with Sample Environments
 
 <p float="left">
-  <img src="assets/office_environment.png" width="49%" />
-  <img src="assets/warehouse_environment.png" width="49%" /> 
+  <img src="assets/office_environment.png" width="47%" />
+  <img src="assets/warehouse_environment.png" width="47%" /> 
   
 </p>
 
